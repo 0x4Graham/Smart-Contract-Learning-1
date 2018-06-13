@@ -19,6 +19,8 @@ contract Uber_TCR {
         uint  distance;
         uint256  rideValue;        
         RideStatus status;
+        bool rideCompleteDriver;
+        bool rideCompleteRider;
     }
     address[] public listDrivers; 
     mapping(uint => Ride) public rides;
@@ -56,48 +58,20 @@ contract Uber_TCR {
         revert("Not driver");
     }
     
-    function cancelRide(uint _rideId){
-        
-    }
-
-    function accept() public {
-        if (msg.sender == rider){
-            riderOk = true;
-        } else if (msg.sender == seller){
-            driverOk = true;
-        }         
-        if(msg.sender == rider && sellOk)
+    function cancelRide(uint _rideId) public{
+        if(msg.sender == _driver)
         {
-            makePayment();      
-        }
-    }
-
-    function makePayment() public {
-        if(riderOk && driverOk)
+            rides[_rideId].status = PaymentStatus.Cancelled;
+            currency.transfer(_rider,  rides[_rideId].rideValue);
+        }else if(msg.sender == _rider)
         {
-            currency.transfer(driver, rideValue);
+            rides[_rideId].status = PaymentStatus.Cancelled;
+            currency.transfer(_rider,  rides[_rideId].rideValue*0.95);
+            //pay pentatly for cancellings
+            currency.transfer(_driver,  rides[_rideId].rideValue*0.05);
         }
     }
 
 
-    function cancel() public {
-        if (msg.sender == rider) {
-            riderOk = false;        
-        }else if(msg.sender == driver)
-        {
-            driverOk = false; 
-        }
-        if(!riderOk && !drivrOk)
-        {
-            selfdestruct(rider);
-        }
-    }
-
-    function kill() public view{
-        if(msg.sender == escrow)
-        {
-            selfdestruct(driver);
-        }
-    }
 
 }
