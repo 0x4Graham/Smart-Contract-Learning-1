@@ -5,6 +5,7 @@ import "node_modules/openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
 import "node_modules/openzeppelin-solidity/contracts/token/ERC20/BasicToken.sol";
 
 
+
 contract Uber_TCR {
 
     enum RideStatus {NotStarted, Requested, InProgress, Completed, Cancelled }
@@ -27,7 +28,7 @@ contract Uber_TCR {
     ERC20 public currency;
     address public escrowAccount;
 
-    constructor(ERC20 _currency, address[] _drivers){
+    constructor(ERC20 _currency, address[] _drivers) public{
         currency = _currency;
         escrowAccount = msg.sender; 
         listDrivers = _drivers; 
@@ -35,8 +36,8 @@ contract Uber_TCR {
     }
    
     function requestRide(uint _rideId, address _rider, address _driver, string _pickUpLocation, string _dropOffLocation, uint _distance) public{
-        uint256 _rideValue = _ditance * 0.001;
-        rides[_rideId] = Ride(_rider, _driver, _pickUpLocation, _dropOffLocation, _distance, _rideValue, RideStatus.NotStarted);
+        uint256 _rideValue = _distance * 1 / 1000;
+        rides[_rideId] = Ride(_rider, _driver, _pickUpLocation, _dropOffLocation, _distance, _rideValue, RideStatus.NotStarted, false, false);
         emit RideCreation(_rideId, _rider, _driver, _rideValue);
     }
 
@@ -49,29 +50,51 @@ contract Uber_TCR {
         }  
     }
 
-    function startRide(uint _rideId, address _driver) public {
+    function startRide(uint _rideId) public {
         
         if(msg.sender == rides[_rideId].driver)
         {
-            rides[_rideId].status = PaymentStatus.InProgress;
+            rides[_rideId].status = RideStatus.InProgress;
         }
         revert("Not driver");
     }
     
     function cancelRide(uint _rideId) public{
+        
+        address _rider = rides[_rideId].rider;
+        address _driver = rides[_rideId].driver;
+
         if(msg.sender == _driver)
         {
-            rides[_rideId].status = PaymentStatus.Cancelled;
+            rides[_rideId].status = RideStatus.Cancelled;
             currency.transfer(_rider,  rides[_rideId].rideValue);
-        }else if(msg.sender == _rider)
+        }else if(msg.sender == rides[_rideId].rider)
         {
-            rides[_rideId].status = PaymentStatus.Cancelled;
-            currency.transfer(_rider,  rides[_rideId].rideValue*0.95);
+            rides[_rideId].status = RideStatus.Cancelled;
+            currency.transfer(_rider,  rides[_rideId].rideValue * 95 / 100);
             //pay pentatly for cancellings
-            currency.transfer(_driver,  rides[_rideId].rideValue*0.05);
+            currency.transfer(_driver,  rides[_rideId].rideValue * 5 / 100);
+        }
+        else{
+            revert("woops");
         }
     }
-
-
-
+    
+    function completeRide(uint _rideId) public{
+        address _rider = rides[_rideId].rider;
+        address _driver = rides[_rideId].driver;
+           
+           
+        if(msg.sender == _driver)
+        {
+            rides[_rideId].rideCompleteDriver = true;
+        }else if(msg.sender == _rider){
+            rides[_rideId].rideCompleteRider = true;
+        }
+        
+        if(rides[_rideId].rideCompleteDriver && rides[_rideId].rideCompleteRider)
+        {
+           currency.transfer(_driver,  rides[_rideId].rideValue);
+        }
+    }
 }
