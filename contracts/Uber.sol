@@ -1,50 +1,61 @@
-pragma solidity ^0.4.23;
+pragma solidity ^0.4.24;
 
 import "node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol";
 import "node_modules/openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
 import "node_modules/openzeppelin-solidity/contracts/token/ERC20/BasicToken.sol";
 
-contract Uber_TCR {
-
+contract Uber_TCR is Ownable{
+    
+    using SafeMath for uint;
     enum RideStatus {NotStarted, Requested, Paid, InProgress, Completed, Cancelled }
+    
     event RideCreation(uint indexed rideId, address indexed driver, address indexed rider, uint rideValue);
     event RideComplete(uint indexed rideId, address indexed driver, address indexed rider, uint rideValue);
-
+    event RidePaid(uint indexed rideId, address rider);
+    
     struct Ride{
         address  rider; 
         address  driver;
         string pickUpLocation;
         string dropOffLocation;
         uint  distance;
-        uint  rideValue;        
+        uint256  rideValue;        
         RideStatus status;
         bool rideCompleteDriver;
         bool rideCompleteRider;
     }
-
+    uint private numberOfRides;
     address[] public listDrivers; 
     mapping(uint => Ride) public rides;
-    address public escrowAccount;
-    uint public contractAmount;
-    
+    uint private contractAmount;
+    uint public feePerKM = 0.001 ether;
     constructor(address[] _drivers) public{
-        escrowAccount = msg.sender; 
         listDrivers = _drivers;         
     }
     
-    function requestRide(uint _rideId, address _driver, string _pickUpLocation, string _dropOffLocation, uint _distance) public{
+    function setRideFee(uint256 _newFee) onlyOwner public{
+        feePerKM = _newFee;
+    }
+    
+    function requestRide(address _driver, string _pickUpLocation, string _dropOffLocation, uint _distance) public{
+        
+        uint _rideId = numberOfRides++;
         address _rider = msg.sender;
-        uint _rideValue = 20 ether;
+        uint256 _rideValue = SafeMath.mul(_distance, feePerKM);
         rides[_rideId] = Ride(_rider, _driver, _pickUpLocation, _dropOffLocation, _distance, _rideValue, RideStatus.Requested, false, false);
         emit RideCreation(_rideId, _rider, _driver, _rideValue);
     }
 
     function payForRide(uint _rideId) public payable{
+        
+        require(rides[_rideId].status == RideStatus.Requested, "Ride not in the correct state");
+        
         contractAmount+= msg.value;
         if(msg.sender == rides[_rideId].rider) {
             if(msg.value == rides[_rideId].rideValue)
             {
                 rides[_rideId].status = RideStatus.Paid;
+                emit RidePaid(_rideId, msg.sender);
             }
             else{
                 revert("Incorrect Amount");
@@ -53,12 +64,11 @@ contract Uber_TCR {
     }
 
     function startRide(uint _rideId) public {
-        
+        require(rides[_rideId].status == RideStatus.Paid, "Ride has not been paid for yet");
         if(msg.sender == rides[_rideId].driver)
         {
             rides[_rideId].status = RideStatus.InProgress;
-        }else
-        {
+        }else{
             revert("Not driver");
         }
     }
@@ -81,6 +91,7 @@ contract Uber_TCR {
     }
 
     function completeRide(uint _rideId) public{
+        
         
         address _driver = rides[_rideId].driver;
         address _rider = rides[_rideId].rider;
