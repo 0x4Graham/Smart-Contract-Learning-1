@@ -29,6 +29,7 @@ contract Uber_TCR is Ownable{
     mapping(uint => Ride) public rides;
     uint private contractAmount;
     uint public feePerKM = 0.001 ether;
+    
     constructor(address[] _drivers) public{
         listDrivers = _drivers;         
     }
