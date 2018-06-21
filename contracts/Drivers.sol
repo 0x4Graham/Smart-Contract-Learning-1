@@ -3,7 +3,7 @@ pragma solidity ^0.4.24;
 import "node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol";
 import "node_modules/openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
 import "node_modules/openzeppelin-solidity/contracts/token/ERC20/BasicToken.sol";
-
+import "contracts/Ownable.sol";
 
 contract Drivers is Ownable{
 
@@ -20,7 +20,7 @@ contract Drivers is Ownable{
     uberDriver[] public uberdrivers;
    // mapping (uint => uberDriver) public uberdrivers;    
     uint numberOfDrivers; 
-    event DriverAccessRequested(address uberAddress, string status);
+    event DriverAccessRequested(address indexed uberAddress, string indexed status);
     event DriverAccessReviewed(address uberAddress, string message);
     event DriverRated(uint _driverId, uint rating);
 
@@ -51,10 +51,11 @@ contract Drivers is Ownable{
         return result;
     }
     
-    function requestToBeDriver(string _car, string _name) public {
+    function requestToBeDriver(string _car, string _name) public returns(string){
         numberOfDrivers++;
-        uberdrivers[numberOfDrivers] = uberDriver(msg.sender,0, _name, _car, DriverStatus.Requested);        
-        emit DriverAccessRequested(msg.sender, "Requested");
+        uberdrivers[numberOfDrivers] = uberDriver(msg.sender,0, _name, _car, DriverStatus.Requested);     
+           
+       // emit DriverAccessRequested(msg.sender, "Requested");
     }
 
     function reviewDriver(uint _driverID, address _driverAddress, string _returnStatus) onlyOwner public{
@@ -74,11 +75,11 @@ contract Drivers is Ownable{
             uberdrivers[_driverID].status = DriverStatus.NotRegistered;
             message = "Still not registred";
         }
-        emit DriverAccessReviewed(_driverAddress, message);
+     //   emit DriverAccessReviewed(_driverAddress, message);
     }
 
     function rateDriver(uint _driverId, uint rating) public isUberContract(msg.sender){        
         uberdrivers[_driverId].rating = uberdrivers[_driverId].rating + rating;
-        emit DriverRated(_driverId, uberdrivers[_driverId].rating);
+  //      emit DriverRated(_driverId, uberdrivers[_driverId].rating);
     }
 }

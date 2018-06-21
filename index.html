@@ -4,15 +4,28 @@
         <title>
             myDapp
         </title>
-        <script src="web3.js/dist/web3.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+        <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script language="javascript" src="./dist/web3.min.js"></script>
         <script language="javascript" type="text/javascript" src="/Javascript/uberDriverABI.js"></script>
         <script language="javascript" type="text/javascript" src="/Javascript/uberContract_ABI.js"></script>
 
     </head>
     <body>
         <h1>Interact with a contract</h1>
-            
+            <div id="drivers"></div>
+            <input type="button" onclick="getAllDriver()" value="Get Driver"> 
+        </br>
+    <div id="txStatus"></div>
+    <div id="accountAddress"></div>
+    <div id="addDriversDiv">
+        <lablel>Name</lablel> </br>
+        <input type="text" id="addName">
+        </br>
+        <lablel>Car</lablel> </br>
+        <input type="text" id="addCar">
+        </br>
+        <input type="button" onclick="addDriver()" value="Add Driver"> 
+    </div>
         </body>
 </html>
 
@@ -20,27 +33,73 @@
     var uberDrivers;
     var userAccount;
     var uberContract; 
+    var MyContract = web3.eth.contract(uberDriversABI);
+
     function startApp() {
-        var uberDriversAddress = "";
-        var uberContractAddress = "";
-
-        uberDrivers = new web3.js.eth.Contract(uberDriversABI,uberDriversAddress)
-        uberContract = new web3.js.eth.Contract(uberContractABI,uberContractAddress)
-
+        var uberDriversAddress = "0xf25186b5081ff5ce73482ad761db0eb0d25abfbf";
+        var uberContractAddress = "0x345ca3e014aaf5dca488057592ee47305d9b3e10";
+        
+        uberDrivers = MyContract.at('0xf25186b5081ff5ce73482ad761db0eb0d25abfbf');
+        //uberDrivers = new web3js.eth.contract(uberDriversABI).at(uberDriversAddress);
+        //uberContract = new web3js.eth.contract(uberContractABI,uberContractAddress);
+        console.log(uberDrivers);
          var accountInterval = setInterval(function() {
           // Check if account has changed
           if (web3.eth.accounts[0] !== userAccount) {
             userAccount = web3.eth.accounts[0];
+            $("#accountAddress").html("Your account: " + userAccount);
           }
         }, 100);
 
 
     }
+    function getAllDriver()
+    {
+    uberDrivers.getAllDrivers(function(error, result){
+     if(!error)
+         console.log(result)
+     else
+         console.error(error);
+    });
+    }
+    function displayDrivers(ids){
+        $("#drivers").empty();
+        for(id of ids){
+            getDriverDetails(id)
+            .then(function(driver){
+            $("#drivers").append(`<div class="driver">
+              <ul>
+                <li>Name: ${driver.name}</li>
+                <li>Car: ${driver.car}</li>
+                <li>Rating: ${driver.rating}</li>
+                <li>Address: ${driver.address}</li>
+              </ul>
+            </div>`);
+            })
+        }
+    }
 
+    function addDriver(){
+        var _name = $("#addName").val();
+        var _car = $("#addCar").val();
+        
+        //return uberDrivers.requestToBeDriver(drivercar, drivername)
+        uberDrivers.requestToBeDriver(_car,_name,{gas: 100000000000,gas: 4712388},function(error, result){
+            if(!error)
+                console.log(result)
+            else
+                console.error(error);
+         });
+    }
+
+      function getDriverDetails(id) {
+        return uberDrivers.methods.uberdrivers(id);
+      }
+
+    
      window.addEventListener('load', function() {
 
         if (typeof web3 !== 'undefined') {
-  
         web3js = new Web3(web3.currentProvider);
         } else {
 

@@ -2,7 +2,9 @@ pragma solidity ^0.4.24;
 
 import "node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol";
 import "node_modules/openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
+import "node_modules/openzeppelin-solidity/contracts/token/ERC20/ERC20Basic.sol";
 import "node_modules/openzeppelin-solidity/contracts/token/ERC20/BasicToken.sol";
+import "contracts/Ownable.sol";
 
 contract Uber_TCR is Ownable{
     
@@ -30,9 +32,9 @@ contract Uber_TCR is Ownable{
     uint private contractAmount;
     uint public feePerKM = 0.001 ether;
     
-    constructor(address[] _drivers) public{
-        listDrivers = _drivers;         
-    }
+   // constructor(address[] _drivers) public{
+   //     listDrivers = _drivers;         
+   // }
     
     function setRideFee(uint256 _newFee) onlyOwner public{
         feePerKM = _newFee;
