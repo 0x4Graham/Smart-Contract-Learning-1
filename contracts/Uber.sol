@@ -32,12 +32,20 @@ contract Uber_TCR is Ownable{
     uint private contractAmount;
     uint public feePerKM = 0.001 ether;
     
-   // constructor(address[] _drivers) public{
-   //     listDrivers = _drivers;         
-   // }
+    constructor(address[] _drivers) public{
+        listDrivers = _drivers;         
+    }
     
     function setRideFee(uint256 _newFee) onlyOwner public{
         feePerKM = _newFee;
+    }
+
+    function numOfDrivers() public view returns(uint256){
+        return listDrivers.length;
+    }
+    
+    function getAllDriver() public view returns(address[]){
+        return listDrivers;
     }
     
     function requestRide(address _driver, string _pickUpLocation, string _dropOffLocation, uint _distance) public{

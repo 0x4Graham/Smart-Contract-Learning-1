@@ -7,7 +7,7 @@ import "contracts/Ownable.sol";
 
 contract Drivers is Ownable{
 
-    enum DriverStatus{Registered, NotRegistered, Failed, Requested, Pending}
+    enum DriverStatus{Requested, Registered, NotRegistered, Failed, Pending}
 
     struct uberDriver{
         address driverAddress;
