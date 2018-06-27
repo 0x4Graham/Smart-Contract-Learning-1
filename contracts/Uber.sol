@@ -11,7 +11,7 @@ contract Uber_TCR is Ownable{
     using SafeMath for uint;
     enum RideStatus {NotStarted, Requested, Paid, InProgress, Completed, Cancelled }
     
-    event RideCreation(uint indexed rideId, address indexed driver, address indexed rider, uint rideValue);
+    event RideCreation(uint indexed rideId, uint rideValue);
     event RideComplete(uint indexed rideId, address indexed driver, address indexed rider, uint rideValue);
     event RidePaid(uint indexed rideId, address rider);
     
@@ -28,6 +28,7 @@ contract Uber_TCR is Ownable{
     }
     uint private numberOfRides;
     address[] public listDrivers; 
+   // Ride[] public rides;
     mapping(uint => Ride) public rides;
     uint private contractAmount;
     uint public feePerKM = 0.001 ether;
@@ -48,13 +49,27 @@ contract Uber_TCR is Ownable{
         return listDrivers;
     }
     
+    function getRideCount() public view returns(uint){
+        return numberOfRides;
+    }
+
+    function getRide(uint _rideId) public view returns(uint, address, address, string, string, uint)
+    {        
+        address driver = rides[_rideId].driver;
+        address rider = rides[_rideId].rider;
+        string pickup = rides[_rideId].pickUpLocation;
+        string droppOff = rides[_rideId].dropOffLocation;
+        uint value = rides[_rideId].rideValue;
+        return(_rideId, driver, rider, pickup, droppOff, value);
+    }
+
     function requestRide(address _driver, string _pickUpLocation, string _dropOffLocation, uint _distance) public{
-        
-        uint _rideId = numberOfRides++;
+        numberOfRides++;
+        uint _rideId = numberOfRides;
         address _rider = msg.sender;
         uint256 _rideValue = SafeMath.mul(_distance, feePerKM);
         rides[_rideId] = Ride(_rider, _driver, _pickUpLocation, _dropOffLocation, _distance, _rideValue, RideStatus.Requested, false, false);
-        emit RideCreation(_rideId, _rider, _driver, _rideValue);
+        emit RideCreation(_rideId, _rideValue);
     }
 
     function payForRide(uint _rideId) public payable{

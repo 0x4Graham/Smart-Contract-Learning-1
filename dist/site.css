@@ -1,0 +1,13 @@
+.starter-template {
+    padding: 40px 15px;
+}
+
+body {
+    padding-top: 50px;
+}
+
+
+#loader {
+    width: 100px;
+    display:none;
+}

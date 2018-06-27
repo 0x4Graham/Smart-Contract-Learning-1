@@ -1,4 +1,4 @@
-var uberContractABI = [
+var uberContractABI =  [
   {
     "constant": true,
     "inputs": [],
@@ -23,6 +23,10 @@ var uberContractABI = [
     ],
     "name": "rides",
     "outputs": [
+      {
+        "name": "rideId",
+        "type": "uint256"
+      },
       {
         "name": "rider",
         "type": "address"
@@ -138,16 +142,6 @@ var uberContractABI = [
         "indexed": true,
         "name": "rideId",
         "type": "uint256"
-      },
-      {
-        "indexed": true,
-        "name": "driver",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "name": "rider",
-        "type": "address"
       },
       {
         "indexed": false,
@@ -267,6 +261,59 @@ var uberContractABI = [
       {
         "name": "",
         "type": "address[]"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getRideCount",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_rideId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getRide",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "name": "",
+        "type": "address"
+      },
+      {
+        "name": "",
+        "type": "address"
+      },
+      {
+        "name": "",
+        "type": "string"
+      },
+      {
+        "name": "",
+        "type": "string"
+      },
+      {
+        "name": "",
+        "type": "uint256"
       }
     ],
     "payable": false,
