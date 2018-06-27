@@ -11,9 +11,9 @@ contract Uber_TCR is Ownable{
     using SafeMath for uint;
     enum RideStatus {NotStarted, Requested, Paid, InProgress, Completed, Cancelled }
     
-    event RideCreation(uint indexed rideId, uint rideValue);
+    event RideCreation(uint indexed rideId, address driver, address rider, string pickup, string dropoff, uint rideValue, uint status);
     event RideComplete(uint indexed rideId, address indexed driver, address indexed rider, uint rideValue);
-    event RidePaid(uint indexed rideId, address rider);
+    event RidePaid(uint indexed rideId, uint status);
     
     struct Ride{
         address  rider; 
@@ -28,7 +28,6 @@ contract Uber_TCR is Ownable{
     }
     uint private numberOfRides;
     address[] public listDrivers; 
-   // Ride[] public rides;
     mapping(uint => Ride) public rides;
     uint private contractAmount;
     uint public feePerKM = 0.001 ether;
@@ -53,14 +52,15 @@ contract Uber_TCR is Ownable{
         return numberOfRides;
     }
 
-    function getRide(uint _rideId) public view returns(uint, address, address, string, string, uint)
+    function getRide(uint _rideId) public view returns(uint, address, address, string, string, uint, uint)
     {        
         address driver = rides[_rideId].driver;
         address rider = rides[_rideId].rider;
         string pickup = rides[_rideId].pickUpLocation;
         string droppOff = rides[_rideId].dropOffLocation;
         uint value = rides[_rideId].rideValue;
-        return(_rideId, driver, rider, pickup, droppOff, value);
+        uint status = uint(rides[_rideId].status);
+        return(_rideId, driver, rider, pickup, droppOff, value, status);
     }
 
     function requestRide(address _driver, string _pickUpLocation, string _dropOffLocation, uint _distance) public{
@@ -69,7 +69,7 @@ contract Uber_TCR is Ownable{
         address _rider = msg.sender;
         uint256 _rideValue = SafeMath.mul(_distance, feePerKM);
         rides[_rideId] = Ride(_rider, _driver, _pickUpLocation, _dropOffLocation, _distance, _rideValue, RideStatus.Requested, false, false);
-        emit RideCreation(_rideId, _rideValue);
+        emit RideCreation(_rideId, _driver, _rider, _pickUpLocation, _dropOffLocation, _rideValue, uint(RideStatus.Requested));
     }
 
     function payForRide(uint _rideId) public payable{
@@ -81,7 +81,7 @@ contract Uber_TCR is Ownable{
             if(msg.value == rides[_rideId].rideValue)
             {
                 rides[_rideId].status = RideStatus.Paid;
-                emit RidePaid(_rideId, msg.sender);
+                emit RidePaid(_rideId, uint(rides[_rideId].status));
             }
             else{
                 revert("Incorrect Amount");
@@ -122,12 +122,15 @@ contract Uber_TCR is Ownable{
         address _driver = rides[_rideId].driver;
         address _rider = rides[_rideId].rider;
 
-        if(msg.sender == _driver)
+        if(msg.sender == _driver && rides[_rideId].rideCompleteDriver == false)
         {
             rides[_rideId].rideCompleteDriver = true;            
-        }else if(msg.sender == _rider)
+        }else if(msg.sender == _rider &&  rides[_rideId].rideCompleteRider == false)
         {
             rides[_rideId].rideCompleteRider = true;            
+        }
+        else{
+            revert("Woops");
         }
 
         if(rides[_rideId].rideCompleteDriver && rides[_rideId].rideCompleteRider)

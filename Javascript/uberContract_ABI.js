@@ -1,4 +1,4 @@
-var uberContractABI =  [
+var uberContractABI = [
   {
     "constant": true,
     "inputs": [],
@@ -23,10 +23,6 @@ var uberContractABI =  [
     ],
     "name": "rides",
     "outputs": [
-      {
-        "name": "rideId",
-        "type": "uint256"
-      },
       {
         "name": "rider",
         "type": "address"
@@ -145,7 +141,32 @@ var uberContractABI =  [
       },
       {
         "indexed": false,
+        "name": "driver",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "name": "rider",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "name": "pickup",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "name": "dropoff",
+        "type": "string"
+      },
+      {
+        "indexed": false,
         "name": "rideValue",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "name": "status",
         "type": "uint256"
       }
     ],
@@ -189,8 +210,8 @@ var uberContractABI =  [
       },
       {
         "indexed": false,
-        "name": "rider",
-        "type": "address"
+        "name": "status",
+        "type": "uint256"
       }
     ],
     "name": "RidePaid",
@@ -310,6 +331,10 @@ var uberContractABI =  [
       {
         "name": "",
         "type": "string"
+      },
+      {
+        "name": "",
+        "type": "uint256"
       },
       {
         "name": "",

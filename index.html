@@ -21,75 +21,102 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-                    aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
                 <a class="navbar-brand" href="#">Uber App</a>
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li class="active">
-                        <a href="#">Request Ride</a>
+                        <a href="#RequestRideDiv" data-toggle="tab">Request Ride</a>
                     </li>
                     <li>
-                        <a href="#about">Ride</a>
+                        <a href="#ridesDiv" data-toggle="tab">Ride</a>
                     </li>
                     <li>
-                        <a href="#about">List Of Rides</a>
+                        <a href="#ridesListDiv" data-toggle="tab">List Of Rides</a>
                     </li>
                     <li>
-                        <a href="#contact">Become a Rider</a>
+                        <a href="#contact" data-toggle="tab">Become a Rider</a>
                     </li>
                 </ul>
             </div>
             <!--/.nav-collapse -->
         </div>
     </nav>
-    <div class="container">
-        <div class="col-md-8">
-            <h3>Request Ride</h3>
-            </br>
-            <div id="accountAddress"></div>
-            <div id="addDriversDiv">
-                <lablel>Driver</lablel>
-                </br>
-                <input type="text" class="form-control" id="addDriver">
-                </br>
-                <lablel>Pick Up</lablel>
-                </br>
-                <input type="text" class="form-control" id="addPickUp">
-                </br>
-                <lablel>Drop Off</lablel>
-                </br>
-                <input type="text" class="form-control" id="addDropOff">
-                </br>
-                <lablel>Distance</lablel>
-                </br>
-                <input type="text" class="form-control" id="addDistance">
-                </br>
-                <img id="loader" src="https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif">
-                <br>
-                <div id="txStatus"></div>
-                </br>
-                <button type="button" class="btn btn-default" onclick="requestRide()">Request Ride</button>
+    <div class="tab-content">
+        <div id="RequestRideDiv" class="tab-pane fade blocks  in active">
+            <div class="container">
+                <div class="col-md-8">
+                    <h3>Request Ride</h3>
+                    </br>
+                    <div id="accountAddress"></div>
+                    <div id="addDriversDiv">
+                        <lablel>Driver</lablel>
+                        </br>
+                        <input type="text" class="form-control" id="addDriver">
+                        </br>
+                        <lablel>Pick Up</lablel>
+                        </br>
+                        <input type="text" class="form-control" id="addPickUp">
+                        </br>
+                        <lablel>Drop Off</lablel>
+                        </br>
+                        <input type="text" class="form-control" id="addDropOff">
+                        </br>
+                        <lablel>Distance</lablel>
+                        </br>
+                        <input type="text" class="form-control" id="addDistance">
+                        </br>
+                        <img id="loader" src="https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif">
+                        <br>
+                        <div id="txStatus"></div>
+                        </br>
+                        <button type="button" class="btn btn-default" onclick="requestRide()">Request Ride</button>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div>
+                        <h3>Drivers to Select From</h3>
+                    </div>
+                    <div id="drivers"></div>
+                    <br>
+
+
+                </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <h3>Drivers to Select From</h3>
-            <div id="drivers"></div>
-            <br>
-            <h4>Number of Rides</h4>
-            <div id="rideCount">
-            </div>
-            <div id="getAllRides">
+        <div id="ridesDiv" class="tab-pane fade blocks">
+            <div class="container">
+                <div class="col-md-8">
+                    <br>
+                    <h4>Current Ride</h4>
+                    <ul>
+                        <li id="rideid">Ride Id:</li>
+                        <li id="driveraddress">Driver Address: </li>
+                        <li id="rideraddress">Rider Address:</li>
+                        <li id="pickupaddress">Pick Up Address:</li>
+                        <li id="dropoffaddress">Drop off Address:</li>
+                        <li id="rideval">Ride Value</li>
+                        <li id="ridestatus">Ride Status:</li>
+                    </ul>
+                    <div id="actions">
 
+                    </div>
+                </div>
             </div>
         </div>
+        <div id="ridesListDiv" class="tab-pane fade blocks">
+            <div class="container">
 
+                <div class="col-md-8">
+                    <h4>Number of Rides</h4>
+                    <div id="rideCount">
+                    </div>
+                    <h3>Rides</h3>
+                    <div id="getAllRides">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </body>
@@ -109,6 +136,8 @@
 
         //uberDrivers = MyContract.at('0xf25186b5081ff5ce73482ad761db0eb0d25abfbf');
         uberContract = MyUberContract.at('0x345ca3e014aaf5dca488057592ee47305d9b3e10');
+        requestRideEvent = uberContract.RideCreation();
+        payRideEvent = uberContract.RidePaid();
 
         //uberDrivers = new web3js.eth.contract(uberDriversABI).at(uberDriversAddress);
         //uberContract = new web3js.eth.contract(uberContractABI,uberContractAddress);
@@ -117,13 +146,12 @@
             // Check if account has changed
             if (web3.eth.accounts[0] !== userAccount) {
                 userAccount = web3.eth.accounts[0];
-                $("#accountAddress").html("Your account: " + userAccount);
+                $("#accountAddress").html("Your account: " + userAccount); 
+                events();               
             }
         }, 100);
         getAllDriver();
         getAllRides();
-        requestRideEvent = uberContract.RideCreation();
-
     }
     var listOfDrivers;
 
@@ -151,39 +179,92 @@
             if (!err) {
                 ridecount = res;
                 $("#rideCount").append("<div id='rideCount2'>" + ridecount + " </div>");
+                for (var i = 0; i < ridecount; i++) {
+                    var k = i+1;
+                    uberContract.getRide(k, function (err, res) {
+                        if (!err) {
+                            console.log(res);
+                            var rideValue2 = web3.fromWei(res[5], 'ether');
+                            var status = getStatus(res[6]);
+
+                            $("#getAllRides").append(`<div class="panel-group">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" href="#collapse` + res[0] + `"> Ride` + res[0] + `</a>
+                                    </h4>
+                            </div>
+                            <div id="collapse` + res[0] + `" class="panel-collapse collapse">
+                                <div id="panel` + res[0] + `" class="panel-body">
+                                    <ul>
+                                        <li>Ride Id: ` + res[0] + `</li>
+                                        <li>Driver Address: ` + res[1] + `</li>
+                                        <li>Rider Address: ` + res[2] + `</li>
+                                        <li>Pick Up Address: ` + res[3] + `</li>
+                                        <li>Drop off Address: ` + res[4] + `</li>
+                                        <li>Ride Value: ` + rideValue2 + ` ether</li>
+                                        <li>Ride Status: ` + status + `</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            </div>
+                            </div>`);
+                            if (status == "Requested") {
+                                $("#panel" + res[0]).append(`
+                                <button  type="button" class="btn btn-default" onclick="payForRide(` + res[0] + `, ` + rideValue2 + `)">Pay for ride</button>`)
+                            } else if (status == "Paid" && userAccount == res[1]) {
+                                $("#panel" + res[0]).append(`
+                                <button  type="button" class="btn btn-default" onclick="startRide(` + res[0] + `)">Start Ride</button>`)
+                            }
+                            else if ((status == "InProgress") && (userAccount == res[2] || userAccount == res[1])) {
+                                $("#panel" + res[0]).append(`
+                                <button  type="button" class="btn btn-default" onclick="completeRide(` + res[0] + `)">Complete</button>`)
+                                $("#panel" + res[0]).append(`
+                                <button  type="button" class="btn btn-default" onclick="cancelRide(` + res[0] + `)">Cancel</button>`)
+                            }
+                        } else {
+                            console.log(err);
+                        }
+                    });
+                }
             } else {
                 console.log(err);
             }
         });
-        for (var i = 0; i < ridecount; i++) {
-            uberContract.getRide(i, function (err, res) {
-                if (!err) {
-                    console.log(res);
-                    // $("#drivers").append("<div id='rideCount2" + ">" + res + " </div>");
-
-                } else {
-                    console.log(err);
-                }
-            });
-        }
-    }
-    function displayDrivers(ids) {
-        $("#drivers").empty();
-        for (id of ids) {
-            getDriverDetails(id)
-                .then(function (driver) {
-                    $("#drivers").append(`<div class="driver">
-              <ul>
-                <li>Name: ${driver.name}</li>
-                <li>Car: ${driver.car}</li>
-                <li>Rating: ${driver.rating}</li>
-                <li>Address: ${driver.address}</li>
-              </ul>
-            </div>`);
-                })
-        }
     }
 
+    function events(){
+        requestRideEvent.watch(function (error, result) {
+            if (!error) {
+                alert("fdfd");
+                $("#loader").hide();
+                rideID = result.args.rideId;
+                rideValue = web3.fromWei(result.args.rideValue, 'ether');
+                $("#rideid").append(rideID);
+                $("#driveraddress").append(result.args.driver);
+                $("#rideraddress").append(result.args.rider);
+                $("#pickupaddress").append(result.args.pickup);
+                $("#dropoffaddress").append(result.args.dropoff);
+                $("#rideval").append(rideValue);
+                $("#ridestatus").append(getStatus(result.args.status));
+            } else {
+                $("#loader").hide();
+                console.log(error);
+            }
+        });
+
+         payRideEvent.watch(function (error, result) {
+            if (!error) {
+                $("#loader").hide();
+                $("#ridestatus").empty();
+                var status = getStatus(result.args.status);
+                $("#ridestatus").append("Status: " + getStatus(status));
+            } else {
+                $("#loader").hide();
+                console.log(error);
+            }
+        });
+    }
     var rideID;
     var rideValue;
     function requestRide() {
@@ -193,41 +274,64 @@
         var distance = $("#addDistance").val();
 
         uberContract.requestRide(driver, pickup, dropOff, distance, function (err, res) {
-            if (!error)
-                console.log(result)
+            if (!err)
+                console.log(res)
             else
-                console.error(error);
+                console.log(err);
         });
 
-        requestRideEvent.watch(function (error, result) {
-            if (!error) {
-                $("#loader").hide();
-                rideID = result.args.rideId;
-                rideValue = web3.fromWei(result.args.rideValue, 'ether');
-                $("#txStatus").html(result.args.rideId + ' (' + rideValue + ' ether)');             
-            } else {
-                $("#loader").hide();
-                console.log(error);
-            }
-        });
+       
 
     }
 
-    function addDriver() {
-        var _name = $("#addName").val();
-        var _car = $("#addCar").val();
+    function getStatus(id) {
+        var status;
+        if (id == 0) {
+            status = "NotStarted";
+        } else if (id == 1) {
+            status = "Requested";
+        } else if (id == 2) {
+            status = "Paid";
+        } else if (id == 3) {
+            status = "InProgress";
+        } else if (id == 4) {
+            status = "Completed";
+        } else if (id == 5) {
+            status = "Cancelled";
+        }
+        return status;
+    }
 
-        //return uberDrivers.requestToBeDriver(drivercar, drivername)
-        uberDrivers.requestToBeDriver(_car, _name, { gas: 100000000000, gas: 4712388 }, function (error, result) {
-            if (!error)
-                console.log(result)
+    function payForRide(id, value) {
+        var weiValue = web3.toWei(web3.toBigNumber(value), 'ether');
+        alert(weiValue);
+        uberContract.payForRide(id, { value: weiValue }, function (err, res) {
+            if (!err)
+                console.log(res)
             else
-                console.error(error);
+                console.log(err);
+        });
+
+
+        
+    }
+
+    function startRide(id) {
+        uberContract.startRide(id, function (err, res) {
+            if (!err)
+                console.log(res)
+            else
+                console.log(err);
         });
     }
 
-    function getDriverDetails(id) {
-        return uberDrivers.methods.uberdrivers(id);
+    function completeRide(id) {
+        uberContract.completeRide(id, function (err, res) {
+            if (!err)
+                console.log(res)
+            else
+                console.log(err);
+        });
     }
     var selectedDriver;
     function fillDriver(id) {
@@ -242,5 +346,6 @@
 
         }
         startApp()
+        
     })
 </script>

@@ -313,7 +313,7 @@
         "id": 2,
         "nodeType": "ImportDirective",
         "scope": 292,
-        "sourceUnit": 1412,
+        "sourceUnit": 1401,
         "src": "28:72:0",
         "symbolAliases": [],
         "unitAlias": ""
@@ -324,7 +324,7 @@
         "id": 3,
         "nodeType": "ImportDirective",
         "scope": 292,
-        "sourceUnit": 1551,
+        "sourceUnit": 1540,
         "src": "102:76:0",
         "symbolAliases": [],
         "unitAlias": ""
@@ -335,7 +335,7 @@
         "id": 4,
         "nodeType": "ImportDirective",
         "scope": 292,
-        "sourceUnit": 1508,
+        "sourceUnit": 1497,
         "src": "180:81:0",
         "symbolAliases": [],
         "unitAlias": ""
@@ -346,7 +346,7 @@
         "id": 5,
         "nodeType": "ImportDirective",
         "scope": 292,
-        "sourceUnit": 1318,
+        "sourceUnit": 1307,
         "src": "263:31:0",
         "symbolAliases": [],
         "unitAlias": ""
@@ -360,10 +360,10 @@
               "id": 6,
               "name": "Ownable",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 1317,
+              "referencedDeclaration": 1306,
               "src": "318:7:0",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Ownable_$1317",
+                "typeIdentifier": "t_contract$_Ownable_$1306",
                 "typeString": "contract Ownable"
               }
             },
@@ -373,7 +373,7 @@
           }
         ],
         "contractDependencies": [
-          1317
+          1306
         ],
         "contractKind": "contract",
         "documentation": null,
@@ -381,7 +381,7 @@
         "id": 291,
         "linearizedBaseContracts": [
           291,
-          1317
+          1306
         ],
         "name": "Drivers",
         "nodeType": "ContractDefinition",
@@ -894,7 +894,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 1597,
+                            "referencedDeclaration": 1586,
                             "src": "1020:3:0",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -970,10 +970,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        1600,
-                        1601
+                        1589,
+                        1590
                       ],
-                      "referencedDeclaration": 1601,
+                      "referencedDeclaration": 1590,
                       "src": "1012:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -1114,7 +1114,7 @@
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1265,
+                  "referencedDeclaration": 1254,
                   "src": "1168:9:0",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -2155,7 +2155,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 1597,
+                            "referencedDeclaration": 1586,
                             "src": "1962:3:0",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -2498,7 +2498,7 @@
                         "name": "keccak256",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 1591,
+                        "referencedDeclaration": 1580,
                         "src": "2266:9:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -2554,7 +2554,7 @@
                         "name": "keccak256",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 1591,
+                        "referencedDeclaration": 1580,
                         "src": "2294:9:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -2621,7 +2621,7 @@
                           "name": "keccak256",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 1591,
+                          "referencedDeclaration": 1580,
                           "src": "2489:9:0",
                           "typeDescriptions": {
                             "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -2677,7 +2677,7 @@
                           "name": "keccak256",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 1591,
+                          "referencedDeclaration": 1580,
                           "src": "2517:9:0",
                           "typeDescriptions": {
                             "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -2744,7 +2744,7 @@
                             "name": "keccak256",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 1591,
+                            "referencedDeclaration": 1580,
                             "src": "2682:9:0",
                             "typeDescriptions": {
                               "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -2800,7 +2800,7 @@
                             "name": "keccak256",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 1591,
+                            "referencedDeclaration": 1580,
                             "src": "2710:9:0",
                             "typeDescriptions": {
                               "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -3508,7 +3508,7 @@
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1265,
+                  "referencedDeclaration": 1254,
                   "src": "2194:9:0",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -3807,7 +3807,7 @@
                       "name": "msg",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 1597,
+                      "referencedDeclaration": 1586,
                       "src": "3157:3:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_magic_message",
@@ -3955,7 +3955,7 @@
         "id": 2,
         "nodeType": "ImportDirective",
         "scope": 292,
-        "sourceUnit": 1412,
+        "sourceUnit": 1401,
         "src": "28:72:0",
         "symbolAliases": [],
         "unitAlias": ""
@@ -3966,7 +3966,7 @@
         "id": 3,
         "nodeType": "ImportDirective",
         "scope": 292,
-        "sourceUnit": 1551,
+        "sourceUnit": 1540,
         "src": "102:76:0",
         "symbolAliases": [],
         "unitAlias": ""
@@ -3977,7 +3977,7 @@
         "id": 4,
         "nodeType": "ImportDirective",
         "scope": 292,
-        "sourceUnit": 1508,
+        "sourceUnit": 1497,
         "src": "180:81:0",
         "symbolAliases": [],
         "unitAlias": ""
@@ -3988,7 +3988,7 @@
         "id": 5,
         "nodeType": "ImportDirective",
         "scope": 292,
-        "sourceUnit": 1318,
+        "sourceUnit": 1307,
         "src": "263:31:0",
         "symbolAliases": [],
         "unitAlias": ""
@@ -4002,10 +4002,10 @@
               "id": 6,
               "name": "Ownable",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 1317,
+              "referencedDeclaration": 1306,
               "src": "318:7:0",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Ownable_$1317",
+                "typeIdentifier": "t_contract$_Ownable_$1306",
                 "typeString": "contract Ownable"
               }
             },
@@ -4015,7 +4015,7 @@
           }
         ],
         "contractDependencies": [
-          1317
+          1306
         ],
         "contractKind": "contract",
         "documentation": null,
@@ -4023,7 +4023,7 @@
         "id": 291,
         "linearizedBaseContracts": [
           291,
-          1317
+          1306
         ],
         "name": "Drivers",
         "nodeType": "ContractDefinition",
@@ -4536,7 +4536,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 1597,
+                            "referencedDeclaration": 1586,
                             "src": "1020:3:0",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -4612,10 +4612,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        1600,
-                        1601
+                        1589,
+                        1590
                       ],
-                      "referencedDeclaration": 1601,
+                      "referencedDeclaration": 1590,
                       "src": "1012:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -4756,7 +4756,7 @@
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1265,
+                  "referencedDeclaration": 1254,
                   "src": "1168:9:0",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -5797,7 +5797,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 1597,
+                            "referencedDeclaration": 1586,
                             "src": "1962:3:0",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -6140,7 +6140,7 @@
                         "name": "keccak256",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 1591,
+                        "referencedDeclaration": 1580,
                         "src": "2266:9:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -6196,7 +6196,7 @@
                         "name": "keccak256",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 1591,
+                        "referencedDeclaration": 1580,
                         "src": "2294:9:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -6263,7 +6263,7 @@
                           "name": "keccak256",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 1591,
+                          "referencedDeclaration": 1580,
                           "src": "2489:9:0",
                           "typeDescriptions": {
                             "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -6319,7 +6319,7 @@
                           "name": "keccak256",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 1591,
+                          "referencedDeclaration": 1580,
                           "src": "2517:9:0",
                           "typeDescriptions": {
                             "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -6386,7 +6386,7 @@
                             "name": "keccak256",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 1591,
+                            "referencedDeclaration": 1580,
                             "src": "2682:9:0",
                             "typeDescriptions": {
                               "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -6442,7 +6442,7 @@
                             "name": "keccak256",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 1591,
+                            "referencedDeclaration": 1580,
                             "src": "2710:9:0",
                             "typeDescriptions": {
                               "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -7150,7 +7150,7 @@
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1265,
+                  "referencedDeclaration": 1254,
                   "src": "2194:9:0",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -7449,7 +7449,7 @@
                       "name": "msg",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 1597,
+                      "referencedDeclaration": 1586,
                       "src": "3157:3:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_magic_message",
@@ -7576,5 +7576,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.0",
-  "updatedAt": "2018-06-27T11:11:05.050Z"
+  "updatedAt": "2018-06-27T14:14:05.493Z"
 }
