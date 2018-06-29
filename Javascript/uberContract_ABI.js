@@ -135,7 +135,7 @@ var uberContractABI = [
     "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
+        "indexed": false,
         "name": "rideId",
         "type": "uint256"
       },
@@ -168,9 +168,19 @@ var uberContractABI = [
         "indexed": false,
         "name": "status",
         "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "name": "CmD",
+        "type": "bool"
+      },
+      {
+        "indexed": false,
+        "name": "CmR",
+        "type": "bool"
       }
     ],
-    "name": "RideCreation",
+    "name": "RideEvent",
     "type": "event"
   },
   {
@@ -215,6 +225,18 @@ var uberContractABI = [
       }
     ],
     "name": "RidePaid",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "newFee",
+        "type": "uint256"
+      }
+    ],
+    "name": "FeeUpdated",
     "type": "event"
   },
   {
