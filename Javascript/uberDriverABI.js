@@ -1,4 +1,58 @@
-var uberDriversABI = [
+var uberDriversABI =[
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "driversList",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "uberdrivers",
+    "outputs": [
+      {
+        "name": "rating",
+        "type": "uint256"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "car",
+        "type": "string"
+      },
+      {
+        "name": "status",
+        "type": "uint8"
+      },
+      {
+        "name": "index",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
   {
     "constant": false,
     "inputs": [],
@@ -23,41 +77,6 @@ var uberDriversABI = [
     "type": "function"
   },
   {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "uberdrivers",
-    "outputs": [
-      {
-        "name": "driverAddress",
-        "type": "address"
-      },
-      {
-        "name": "rating",
-        "type": "uint256"
-      },
-      {
-        "name": "name",
-        "type": "string"
-      },
-      {
-        "name": "car",
-        "type": "string"
-      },
-      {
-        "name": "status",
-        "type": "uint8"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "constant": false,
     "inputs": [
       {
@@ -75,51 +94,32 @@ var uberDriversABI = [
     "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
-        "name": "uberAddress",
+        "indexed": false,
+        "name": "driver",
         "type": "address"
-      },
-      {
-        "indexed": true,
-        "name": "status",
-        "type": "string"
-      }
-    ],
-    "name": "DriverAccessRequested",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "name": "uberAddress",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "name": "message",
-        "type": "string"
-      }
-    ],
-    "name": "DriverAccessReviewed",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "name": "_driverId",
-        "type": "uint256"
       },
       {
         "indexed": false,
         "name": "rating",
         "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "name": "car",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "name": "status",
+        "type": "uint256"
       }
     ],
-    "name": "DriverRated",
+    "name": "driverEvents",
     "type": "event"
   },
   {
@@ -152,6 +152,25 @@ var uberDriversABI = [
     "type": "event"
   },
   {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_driver",
+        "type": "address"
+      }
+    ],
+    "name": "isUser",
+    "outputs": [
+      {
+        "name": "isIndeed",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "constant": false,
     "inputs": [
       {
@@ -166,63 +185,14 @@ var uberDriversABI = [
     "type": "function"
   },
   {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "_driverId",
-        "type": "uint256"
-      }
-    ],
-    "name": "getDriver",
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256"
-      },
-      {
-        "name": "",
-        "type": "address"
-      },
-      {
-        "name": "",
-        "type": "string"
-      },
-      {
-        "name": "",
-        "type": "string"
-      },
-      {
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "getAllDrivers",
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256[]"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "constant": false,
     "inputs": [
       {
-        "name": "_car",
+        "name": "_name",
         "type": "string"
       },
       {
-        "name": "_name",
+        "name": "_car",
         "type": "string"
       }
     ],
@@ -236,9 +206,127 @@ var uberDriversABI = [
     "constant": false,
     "inputs": [
       {
-        "name": "_driverID",
+        "name": "_driver",
+        "type": "address"
+      },
+      {
+        "name": "_car",
+        "type": "string"
+      },
+      {
+        "name": "_name",
+        "type": "string"
+      }
+    ],
+    "name": "addDriver",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_driver",
+        "type": "address"
+      }
+    ],
+    "name": "removeDriver",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getDriverCount",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_index",
+        "type": "uint256"
+      }
+    ],
+    "name": "getDriverAtIndex",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getAllDriver",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address[]"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_driver",
+        "type": "address"
+      }
+    ],
+    "name": "getDriverDetails",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      },
+      {
+        "name": "",
+        "type": "string"
+      },
+      {
+        "name": "",
+        "type": "string"
+      },
+      {
+        "name": "",
         "type": "uint256"
       },
+      {
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
       {
         "name": "_driverAddress",
         "type": "address"
@@ -249,24 +337,6 @@ var uberDriversABI = [
       }
     ],
     "name": "reviewDriver",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_driverId",
-        "type": "uint256"
-      },
-      {
-        "name": "rating",
-        "type": "uint256"
-      }
-    ],
-    "name": "rateDriver",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",

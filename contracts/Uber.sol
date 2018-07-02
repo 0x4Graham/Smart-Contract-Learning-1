@@ -34,8 +34,7 @@ contract Uber_TCR is Ownable{
     uint public feePerKM = 0.001 ether;
     address public owner; 
     
-    constructor(address[] _drivers) public{
-        listDrivers = _drivers;         
+    constructor() public{
         owner = msg.sender;
     }
     

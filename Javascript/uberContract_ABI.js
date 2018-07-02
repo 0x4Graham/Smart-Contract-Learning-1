@@ -1,4 +1,4 @@
-var uberContractABI = [
+var uberContractABI =  [
   {
     "constant": true,
     "inputs": [],
@@ -121,12 +121,7 @@ var uberContractABI = [
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "name": "_drivers",
-        "type": "address[]"
-      }
-    ],
+    "inputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
     "type": "constructor"

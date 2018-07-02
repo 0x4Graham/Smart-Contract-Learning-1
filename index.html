@@ -138,11 +138,14 @@
     var uberDrivers;
     var userAccount;
     var uberContract;
+    var DriverContract;
     var alllRideEvent;
     var owner;
     //    var MyContract = web3.eth.contract(uberDriversABI);
     var MyUberContract = web3.eth.contract(uberContractABI);
     uberContract = MyUberContract.at('0x345ca3e014aaf5dca488057592ee47305d9b3e10');
+    var MyDriverContract = web3.eth.contract(uberDriversABI);
+    DriverContract = MyDriverContract.at('0xf25186b5081ff5ce73482ad761db0eb0d25abfbf');
     var alllRideEvent = uberContract.RideEvent();
     var feeUpdateEvent = uberContract.FeeUpdated();
 
@@ -153,7 +156,7 @@
                 userAccount = web3.eth.accounts[0];
                 $("#accountAddress").html("Your account: " + userAccount);
                 callRideEvent();
-                adminActions();
+                adminActions();                
             }
         }, 100);
     }
@@ -211,7 +214,7 @@
 
     function getAllDriver() {
         $("#drivers").empty();
-        uberContract.getAllDriver(function (err, res) {
+        DriverContract.getAllDriver(function (err, res) {
             if (!err) {
                 listOfDrivers = res;
             } else {
@@ -221,7 +224,19 @@
             var numDrivers = listOfDrivers.length;
             for (var i = 0; i < numDrivers; i++) {
                 var addressVal = web3.toBigNumber(listOfDrivers[i]);
-                $("#drivers").append("<div id='driver" + i + "'class='driver' onclick='fillDriver(" + i + ")'>" + listOfDrivers[i] + " </div>");
+                var newVal = 1;
+                DriverContract.getDriverDetails(addressVal, function(err1,res2){
+                    if (!err) {                        
+                    //console.log(i);
+                    
+                    $("#drivers").append("<div id='driver" + newVal + "'class='driver' onclick='fillDriver(" + newVal + ")'> <p> Address: " 
+                    +  res2[0] + "</p></br><p>Name: " + res2[1] + "</p></br><p> Car: "  + res2[2] + "</p></br><p>Rating: " + res2[3] + "</p></div>");
+                    newVal++;
+                    }else {
+                    console.log(err);
+                    }
+                })
+
             }
         });
     }
@@ -360,12 +375,11 @@
                 console.log(res)
             else
                 console.log(err);
-        });
+        });        
     }
-    var selectedDriver;
-    function fillDriver(id) {
-        selectedDriver = id;
-        $("#addDriver").val(listOfDrivers[id]);
+
+    function fillDriver(id) {      
+        $("#addDriver").val(listOfDrivers[id-1]);
     }
     window.addEventListener('load', function () {
 
