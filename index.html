@@ -8,16 +8,19 @@
     <title>
         myDapp
     </title>
+    <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href="/css/site.css" rel="stylesheet">
+    <link href="/css/star-rating.css" media="all" rel="stylesheet" type="text/css" />
     <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script language="javascript" type="text/javascript" src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script language="javascript" type="text/javascript" src="/dist/star-rating.js"></script>
     <script language="javascript" src="./dist/web3.min.js"></script>
     <script language="javascript" type="text/javascript" src="/Javascript/uberDriverABI.js"></script>
     <script language="javascript" type="text/javascript" src="/Javascript/uberContract_ABI.js"></script>
-    <script language="javascript" type="text/javascript" src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script language="javascript" type="text/javascript" src="/dist/uber.js"></script>
     <script language="javascript" type="text/javascript" src="/dist/adminActions.js"></script>
     <script language="javascript" type="text/javascript" src="/dist/driver.js"></script>
-    <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/dist/site.css" rel="stylesheet">
 </head>
 
 <body>
@@ -141,21 +144,103 @@
         </div>
         <div id="adminTab" class="tab-pane fade blocks" style=>
             <div class="container">
+                </br>
                 <div class="row">
                     <div class="col-md-8">
-                        <br>
-                        <h4>Update Fee Per KM</h4>
-                        </br>
-                        <p id="rideFee2"></p>
-                        <input type="text" class="form-control" id="addNewFee">
-                        <br>
-                        <button type="button" class="btn btn-default" onclick="updateFeePerKM()">Update Fee Per KM</button>
+                        <div class="panel-group">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" href="#collapseFeeUpdate">Update Ride Fee</a>
+                                    </h4>
+                                </div>
+                            </div>
+                            <div id="collapseFeeUpdate" class="panel-collapse collapse">
+                                <div id="panel" class="panel-body">
+                                    <h4>Update Fee Per KM</h4>
+                                    <p id="rideFee2"></p>
+                                    <input type="text" class="form-control" id="addNewFee">
+                                    <br>
+                                    <button type="button" class="btn btn-default" onclick="updateFeePerKM()">Update Fee Per KM</button>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
-                    <h4>Review Drivers</h4>
-                    <div id="reviewDriversDiv">
-                        
+                    <div class="col-md-8">
+                        <div class="panel-group">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" href="#collapseReviewDrivers">Review Drivers</a>
+                                    </h4>
+                                </div>
+                            </div>
+                            <div id="collapseReviewDrivers" class="panel-collapse collapse">
+                                <div id="panel" class="panel-body">
+                                    <div id="reviewDriversDiv">
+                                        <select id="addressListReview" onchange="loadRequestedDetails(this)" class="form-control">
+
+                                        </select>
+                                        <br>
+                                        <div id="reviewDriversDivDetails">
+                                            <ul>
+                                                <li>Driver Address
+                                                    <p id="reviewDriverAddress"></p>
+                                                </li>
+                                                <li>Driver Name
+                                                    <p id="reviewDriverName"></p>
+                                                </li>
+                                                <li>Driver Car
+                                                    <p id="reviewDriveCar"></p>
+                                                </li>
+                                            </ul>
+                                            <br>
+                                            <Label>Select Review Option</Label>
+                                            <select id="reviewOption" class="form-control">
+                                                <option value="Approved">Approved</option>
+                                                <option value="Pending">Pending</option>
+                                                <option value="Rejected">Rejected</option>
+                                            </select>
+                                            <br>
+                                            <button type="button" class="btn btn-default" onclick="reviewDriver()">Sumbit Review</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="panel-group">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" href="#collapseAddDriver">Add Drivers</a>
+                                    </h4>
+                                </div>
+                            </div>
+                            <div id="collapseAddDriver" class="panel-collapse collapse">
+                                <div id="panel" class="panel-body">
+                                    <div id="addAdminDriversDiv">
+                                        <label>Driver Address</label>
+                                        <input type="text" class="form-control" id="addAdminDriverAddress">
+                                        <label>Driver Name</label>
+                                        <input type="text" class="form-control" id="addAdminDriverName">
+                                        <label>Driver Vehicle</label>
+                                        <input type="text" class="form-control" id="addAdminDriverVehicle">
+                                        <br>
+                                        <button type="button" class="btn btn-default" onclick="addDriverAdmin()">Add Driver</button>
+                                        <div id="adminAddDriverReturnMessage"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -177,7 +262,7 @@
     var rideID;
     var rideValue;
     var selectedDriver;
-
+    var rideRating;
     //    var MyContract = web3.eth.contract(uberDriversABI);
     var MyUberContract = web3.eth.contract(uberContractABI);
     uberContract = MyUberContract.at('0x345ca3e014aaf5dca488057592ee47305d9b3e10');
@@ -222,6 +307,8 @@
             status = "Completed";
         } else if (id == 5) {
             status = "Cancelled";
+        } else if (id == 6) {
+            status = "Rated";
         }
         return status;
     }
@@ -300,7 +387,20 @@
             $("#actionsDiv").append(`<p> Driver has completed ride</p>`);
             $("#actionsDiv").append(`<button  type="button" class="btn btn-default" onclick="completeRide(` + rideIDActive + `)">Rider Complete</button>`);
         }
-        else if (statusActive == "Completed") {
+        else if (statusActive == "Completed" && acc == rider) {
+            $("#actionsDiv").empty();
+            $("#actionsDiv").append(`<p> Ride has been completed. Rate ride now </p>`);
+            $("#actionsDiv").append(`<input id="input-21d" type="text" class="rating" data-min=0 data-max=5 data-step=0.5 data-size="sm" title="">`);
+            $("#input-21d").rating({ showCaption: false });
+            $('#input-21d').on('rating:change', function (event, value) {
+                rideRating = value;
+            });
+            $("#actionsDiv").append(`<button  type="button" class="btn btn-default" onclick="rateRide(` + rideIDActive + `)">Rate Ride</button>`);
+        } else if (statusActive == "Completed" && acc == driver) {
+            $("#actionsDiv").empty();
+            $("#actionsDiv").append(`<p> Ride has been completed </p>`);
+        }
+        else if (statusActive == "Rated") {
             $("#actionsDiv").empty();
             $("#actionsDiv").append(`<p> Ride has been completed </p>`);
         } else if (acc != rider && acc != driver) {
@@ -335,6 +435,7 @@
         <li id="driverAddress">Driver Address:` + result.args.driver + `</li>
         <li id="driverName">Driver Name: ` + result.args.name + `</li>
         <li id="driverCar">Driver Car: ` + result.args.car + `</li>
+        <li id="driverRating">Driver Rating: ` + result.args.rating + `</li>
         <li id="driverStatus">Driver Status: ` + status + `</li>
     </ul>`);
 
@@ -361,5 +462,7 @@
         return driverstatus;
 
     }
+
+
 
 </script>

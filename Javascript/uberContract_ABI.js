@@ -1,4 +1,4 @@
-var uberContractABI =  [
+var uberContractABI = [
   {
     "constant": true,
     "inputs": [],
@@ -58,6 +58,10 @@ var uberContractABI =  [
       {
         "name": "rideCompleteRider",
         "type": "bool"
+      },
+      {
+        "name": "driveRating",
+        "type": "uint256"
       }
     ],
     "payable": false,
@@ -173,6 +177,11 @@ var uberContractABI =  [
         "indexed": false,
         "name": "CmR",
         "type": "bool"
+      },
+      {
+        "indexed": false,
+        "name": "rating",
+        "type": "uint256"
       }
     ],
     "name": "RideEvent",
@@ -267,6 +276,20 @@ var uberContractABI =  [
     "constant": false,
     "inputs": [
       {
+        "name": "_contract",
+        "type": "address"
+      }
+    ],
+    "name": "setdriverContract",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
         "name": "_newFee",
         "type": "uint256"
       }
@@ -343,11 +366,7 @@ var uberContractABI =  [
       },
       {
         "name": "",
-        "type": "string"
-      },
-      {
-        "name": "",
-        "type": "string"
+        "type": "uint256"
       },
       {
         "name": "",
@@ -356,6 +375,29 @@ var uberContractABI =  [
       {
         "name": "",
         "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_rideId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getRideLocationDetails",
+    "outputs": [
+      {
+        "name": "",
+        "type": "string"
+      },
+      {
+        "name": "",
+        "type": "string"
       }
     ],
     "payable": false,
@@ -439,6 +481,24 @@ var uberContractABI =  [
       }
     ],
     "name": "completeRide",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_rideId",
+        "type": "uint256"
+      },
+      {
+        "name": "_rating",
+        "type": "uint256"
+      }
+    ],
+    "name": "rateRide",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",

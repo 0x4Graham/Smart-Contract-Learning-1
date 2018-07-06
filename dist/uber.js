@@ -7,11 +7,21 @@ function getAllRides() {
             $("#rideCount").append("<div id='rideCount2'>" + ridecount + " </div>");
             for (var i = 0; i < ridecount; i++) {
                 var k = i + 1;
+                var pickUp;
+                var dropOff;
+
+                uberContract.getRideLocationDetails(k, function (error, result) {
+                    if (!error) {
+                        pickUp = result[0];
+                        dropOff = result[1];
+                    } else {
+                        console.log(error);
+                    }
+                })
                 uberContract.getRide(k, function (err, res) {
                     if (!err) {
-                        console.log(res);
-                        var rideValue2 = web3.fromWei(res[5], 'ether');
-                        var status = getStatus(res[6]);
+                        var rideValue2 = web3.fromWei(res[3], 'ether');
+                        var status = getStatus(res[4]);
 
                         $("#getAllRides").append(`<div class="panel-group">
                         <div class="panel panel-default">
@@ -26,10 +36,11 @@ function getAllRides() {
                                     <li>Ride Id: ` + res[0] + `</li>
                                     <li>Driver Address: ` + res[1] + `</li>
                                     <li>Rider Address: ` + res[2] + `</li>
-                                    <li>Pick Up Address: ` + res[3] + `</li>
-                                    <li>Drop off Address: ` + res[4] + `</li>
+                                    <li>Pick Up Address: ` + pickUp + `</li>
+                                    <li>Drop off Address: ` + dropOff + `</li>
                                     <li>Ride Value: ` + rideValue2 + ` ether</li>
                                     <li>Ride Status: ` + status + `</li>
+                                    <li>Ride Rating: ` + res[5] + `</li>
                                 </ul>
                             </div>
                         </div>
@@ -61,7 +72,7 @@ function getAllRides() {
 
 
 function requestRide() {
-        
+
     var driver = selectedDriver;
     var pickup = $("#addPickUp").val();
     var dropOff = $("#addDropOff").val();
@@ -101,5 +112,15 @@ function completeRide(id) {
             console.log(res)
         else
             console.log(err);
-    });        
+    });
+}
+
+
+function rateRide(id) {
+    uberContract.rateRide(id, rideRating, function (err, res) {
+        if (!err) {
+            console.log(res);
+        } else
+            console.log(err);
+    })
 }

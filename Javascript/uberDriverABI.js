@@ -47,6 +47,10 @@ var uberDriversABI =[
       {
         "name": "index",
         "type": "uint256"
+      },
+      {
+        "name": "numberOfRides",
+        "type": "uint256"
       }
     ],
     "payable": false,
@@ -66,6 +70,25 @@ var uberDriversABI =[
     "constant": true,
     "inputs": [],
     "name": "owner",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "registeredDriverList",
     "outputs": [
       {
         "name": "",
@@ -174,6 +197,24 @@ var uberDriversABI =[
     "constant": false,
     "inputs": [
       {
+        "name": "_driver",
+        "type": "address"
+      },
+      {
+        "name": "_rating",
+        "type": "uint256"
+      }
+    ],
+    "name": "rateDriver",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
         "name": "_contract",
         "type": "address"
       }
@@ -219,7 +260,12 @@ var uberDriversABI =[
       }
     ],
     "name": "addDriver",
-    "outputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "payable": false,
     "stateMutability": "nonpayable",
     "type": "function"
